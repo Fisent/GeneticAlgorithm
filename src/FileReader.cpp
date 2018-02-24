@@ -1,5 +1,6 @@
 #include "FileReader.h"
 #include <iostream>
+#include <ctype.h>
 
 std::string FileReader::read(std::string filename){
     std::string output;
@@ -11,4 +12,21 @@ std::string FileReader::read(std::string filename){
     }
     myfile.close();
     return output;
+}
+
+std::vector<int> FileReader::toVector(std::string input) {
+    input += "   ";
+    std::vector<int> result;
+    for(int i = 0; i<input.size(); i++){
+        std::string number = "";
+        if(std::isdigit(input.at(i))){
+            int temp_i = i;
+            while(std::isdigit(input.at(temp_i)) && temp_i<input.size()){
+                number += input.at(temp_i);
+                temp_i++;
+            }
+            result.push_back(std::stoi(number));
+        }
+    }
+    return std::vector<int>();
 }

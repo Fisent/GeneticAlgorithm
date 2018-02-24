@@ -26,6 +26,19 @@ TEST (FileReaderTest, ReadFileFirstLine){
     ASSERT_EQ(result.substr(2, 2), "12");
 }
 
+TEST (FileReaderTest, ParseStringToVector){
+    FileReader fr;
+    std::string result = fr.read("had12.dat");
+    std::vector<int> v = fr.toVector(result);
+}
+
+TEST (FileReaderTest, ParseStringToVectorContentCheck){
+    FileReader fr;
+    std::string result = fr.read("had12.dat");
+    std::vector<int> v = fr.toVector(result);
+    ASSERT_NE(v.size(), 0);
+}
+
 TEST (ProblemTest, ProblemCreation){
     SquareMatrix sm(1, std::vector<int>());
     Problem newProblem(1, sm,sm);
@@ -78,6 +91,8 @@ TEST (SquareMatrixTest, MatrixMostAdvancedTest){
     ASSERT_EQ(sm.get(3,4), 23);
     ASSERT_EQ(sm.get(3,3), 18);
 }
+
+
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);

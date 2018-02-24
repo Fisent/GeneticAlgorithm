@@ -14,4 +14,9 @@ int main(){
     }
     myfile.close();
     std::cout << "end" << std::endl;
+    std::cout << output.size();
+
+    for(int i = 0; i<output.size(); i++){
+        std::cout << output.at(i) << std::endl;
+    }
 }
