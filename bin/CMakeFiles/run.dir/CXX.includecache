@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/fisent/Documents/GeneticAlgorithm/main.cpp
+iostream
+-
+gtest/gtest.h
+/home/fisent/Documents/GeneticAlgorithm/gtest/gtest.h
+src/Result.h
+/home/fisent/Documents/GeneticAlgorithm/src/Result.h
+
+/home/fisent/Documents/GeneticAlgorithm/src/Result.h
+
