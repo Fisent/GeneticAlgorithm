@@ -1,16 +1,19 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.9)
 project(GeneticAlgorithm)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
+add_library(genetics src/Result.cpp src/FileReader.cpp src/Problem.cpp)
+
+
+add_executable(GeneticAlgorithm src/main.cpp)
+target_link_libraries(GeneticAlgorithm genetics)
 
 #GTest
 add_subdirectory(googletest)
 enable_testing()
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
-add_executable(runUnitTests ut/test.cpp)
-target_link_libraries(runUnitTests gtest gtest_main)
-add_test(runUnitTests runUnitTests)
-
-set(SOURCE_FILES src/main.cpp src/Result.cpp)
-add_executable(GeneticAlgorithm ${SOURCE_FILES})
+add_executable(runUnitTests ut/test.cpp ${})
+target_link_libraries(runUnitTests gtest gtest_main genetics)
+add_test(ut runUnitTests)
