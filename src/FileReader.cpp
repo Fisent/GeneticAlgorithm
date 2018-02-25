@@ -26,7 +26,8 @@ std::vector<int> FileReader::toVector(std::string input) {
                 temp_i++;
             }
             result.push_back(std::stoi(number));
+            i = temp_i;
         }
     }
-    return std::vector<int>();
+    return result;
 }

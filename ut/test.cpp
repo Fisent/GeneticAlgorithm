@@ -32,29 +32,47 @@ TEST (FileReaderTest, ParseStringToVector){
     std::vector<int> v = fr.toVector(result);
 }
 
-TEST (FileReaderTest, ParseStringToVectorContentCheck){
+TEST (FileReaderTest, ParseStringToVectorSizeCheck){
     FileReader fr;
     std::string result = fr.read("had12.dat");
     std::vector<int> v = fr.toVector(result);
     ASSERT_NE(v.size(), 0);
+    ASSERT_EQ(v.size(), 289);
 }
 
-TEST (ProblemTest, ProblemCreation){
-    SquareMatrix sm(1, std::vector<int>());
-    Problem newProblem(1, sm,sm);
+TEST (FileReaderTest, ParseStringToVectorContentCheck){
+    FileReader fr;
+    std::string result = fr.read("had12.dat");
+    std::vector<int> v = fr.toVector(result);
+    ASSERT_EQ(12, v[0]);
+    ASSERT_EQ(v[1], 0);
+    ASSERT_EQ(v[2], 1);
+    ASSERT_EQ(v[3], 2);
 }
 
 TEST (ProblemTest, ProblemCreationFromFile){
     FileReader fr;
     std::string result = fr.read("had12.dat");
-    Problem newProblem(result);
+    auto vec = fr.toVector(result);
+    Problem newProblem(vec);
 }
 
 TEST (ProblemTest, ProblemCreationFromFileProperN){
     FileReader fr;
     std::string result = fr.read("had12.dat");
-    Problem newProblem(result);
+    auto vec = fr.toVector(result);
+    Problem newProblem(vec);
     ASSERT_EQ(newProblem.getN(), 12);
+}
+
+TEST (ProblemTest, ProblemCreationFromFileProperMatrixes){
+    FileReader fr;
+    Problem newProblem(fr.toVector(fr.read("had12.dat")));
+    ASSERT_EQ(newProblem.getDistanceMatrix()->get(0,0), 0);
+    ASSERT_EQ(newProblem.getDistanceMatrix()->get(11,11), 0);
+    ASSERT_EQ(newProblem.getDistanceMatrix()->get(3, 2), 2);
+    ASSERT_EQ(newProblem.getDistanceMatrix()->get(4, 1), 2);
+    ASSERT_EQ(newProblem.getFlowMatrix()->get(3, 2), 2);
 }
 
 TEST (SquareMatrixTest, MatrixCreationWithParameters){
@@ -92,6 +110,12 @@ TEST (SquareMatrixTest, MatrixMostAdvancedTest){
     ASSERT_EQ(sm.get(3,3), 18);
 }
 
+TEST (ResultTest, ProblemsResultFunctionExsists){
+    FileReader fr;
+    Problem newProblem(fr.toVector(fr.read("had12.dat")));
+    Result r;
+    newProblem.costFunction(r);
+}
 
 
 int main(int argc, char **argv) {

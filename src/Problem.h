@@ -1,12 +1,17 @@
 #pragma once
 #include <string>
 #include "SquareMatrix.h"
+#include "Result.h"
 
 class Problem{
 private:
     int N;
+    SquareMatrix* flowMatrix;
+    SquareMatrix* distanceMatrix;
 public:
-    Problem(int N, SquareMatrix, SquareMatrix);
-    Problem(std::string);
+    explicit Problem(std::vector<int> input);
     int getN();
+    SquareMatrix* getFlowMatrix();
+    SquareMatrix* getDistanceMatrix();
+    int costFunction(Result&);
 };
