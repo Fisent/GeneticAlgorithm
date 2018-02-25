@@ -117,6 +117,11 @@ TEST (ResultTest, ProblemsResultFunctionExsists){
     newProblem.costFunction(r);
 }
 
+TEST (ResultTest, ResultfunctionReturnsProperValue){
+    FileReader fr;
+    Problem newProblem(fr.toVector(fr.read("had12.dat")));
+}
+
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
