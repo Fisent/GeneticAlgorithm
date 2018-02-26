@@ -27,11 +27,13 @@ SquareMatrix *Problem::getDistanceMatrix() {
     return this->distanceMatrix;
 }
 
-int Problem::costFunction(Result &) {
+int Problem::costFunction(Result &r) {
     int result = 0;
     for(int i = 0; i< N; i++){
         for(int j = 0; j<N; j++){
-            //result += distanceMatrix->get(i,j);
+            int dist = distanceMatrix->get(i,j);
+            int flow = flowMatrix->get(r.getVector().at(i), r.getVector().at(j));
+            result += dist * flow;
         }
     }
     return 0;

@@ -110,16 +110,14 @@ TEST (SquareMatrixTest, MatrixMostAdvancedTest){
     ASSERT_EQ(sm.get(3,3), 18);
 }
 
-TEST (ResultTest, ProblemsResultFunctionExsists){
-    FileReader fr;
-    Problem newProblem(fr.toVector(fr.read("had12.dat")));
-    Result r;
-    newProblem.costFunction(r);
-}
 
 TEST (ResultTest, ResultfunctionReturnsProperValue){
     FileReader fr;
     Problem newProblem(fr.toVector(fr.read("had12.dat")));
+    std::vector<int> v{3, 10, 11, 2 ,12, 5, 6, 7, 8, 1 ,4, 9};
+    Result res = Result(v);
+    int cost = newProblem.costFunction(res);
+    ASSERT_EQ(cost, 1652);
 }
 
 

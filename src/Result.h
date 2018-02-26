@@ -7,4 +7,5 @@ class Result{
     std::vector<int> res;
 public:
     std::vector<int> getVector();
+    Result(std::vector<int>);
 };
