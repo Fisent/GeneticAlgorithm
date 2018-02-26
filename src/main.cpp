@@ -3,11 +3,13 @@
 #include "FileReader.h"
 #include "Problem.h"
 #include "Evolution.h"
+#include <random>
+#include <chrono>
 
 #include <fstream>
 #include <sstream>
 
 int main(){
-    Result r(12);
-    r.mutate();
+    auto rand = std::default_random_engine(std::chrono::system_clock::now().time_since_epoch().count());
+    std::cout << rand() % 10;
 }
