@@ -161,6 +161,15 @@ TEST (ResultEvolutionFunctions, ResultMutationChangesVector){
     ASSERT_NE(first_vector, r.getVector());
 }
 
+TEST (ResultEvolutionFunctions, ResultMutationWorksProperly) {
+    std::set<int> set;
+    Result r(12);
+    for (auto a : r.getVector()){
+        set.insert(a);
+    }
+    ASSERT_EQ(set.size(), 12);
+}
+
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
