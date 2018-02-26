@@ -35,7 +35,6 @@ int Problem::costFunction(Result &r) {
             int flow = flowMatrix->get(r.getVector().at(i) -1, r.getVector().at(j) -1);
             result += dist * flow;
         }
-
     }
     return result;
 }

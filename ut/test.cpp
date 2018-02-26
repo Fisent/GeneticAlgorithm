@@ -4,6 +4,7 @@
 #include "../src/Problem.h"
 #include "../src/Result.h"
 #include "../src/SquareMatrix.h"
+#include "../src/Evolution.h"
 
 TEST (FileReaderTest, CreationTest){
     FileReader fr();
@@ -111,7 +112,7 @@ TEST (SquareMatrixTest, MatrixMostAdvancedTest){
 }
 
 
-TEST (ResultTest, ResultfunctionReturnsProperValue){
+TEST (ResultTest, ResultsCostfunctionReturnsProperValue){
     FileReader fr;
     Problem newProblem(fr.toVector(fr.read("had12.dat")));
     std::vector<int> v{3, 10, 11, 2 ,12, 5, 6, 7, 8, 1 ,4, 9};
@@ -120,6 +121,45 @@ TEST (ResultTest, ResultfunctionReturnsProperValue){
     ASSERT_EQ(cost, 1652);
 }
 
+TEST (EvolutionTest, EvolutionCreateTest){
+    Evolution e(100, 100, 0.7, 0.01, 5, "had12.dat");
+}
+
+TEST (EvolutionTest, EvolutionHasProperParameteres){
+    Evolution e(100, 100, 0.7, 0.01, 5, "had12.dat");
+    ASSERT_EQ(e.get_pop_size(), 100);
+    ASSERT_EQ(e.get_gen(), 100);
+    ASSERT_FLOAT_EQ(e.get_px(), 0.7);
+    ASSERT_FLOAT_EQ(e.get_pm(), 0.01);
+    ASSERT_FLOAT_EQ(e.get_tour(), 5);
+}
+
+TEST (EvolutionTest, EvolutionCreatesPopulation) {
+    Evolution e(100, 100, 0.7, 0.01, 5, "had12.dat");
+    e.getPopulation();
+}
+
+TEST (EvolutionTest, EvolutionCreatesPopulationOfProperSize){
+    Evolution e(100, 100, 0.7, 0.01, 5, "had12.dat");
+    ASSERT_EQ(e.getPopulation()->size(), 100);
+}
+
+TEST(EvolutionTest, EvolutionRunsStepOfEvolution){
+    Evolution e(100, 100, 0.7, 0.01, 5, "had12.dat");
+    e.step();
+}
+
+TEST (ResultEvolutionFunctions, ResultMutation){
+    Result r(12);
+    r.mutate();
+}
+
+TEST (ResultEvolutionFunctions, ResultMutationChangesVector){
+    Result r(12);
+    auto first_vector = r.getVector();
+    r.mutate();
+    ASSERT_NE(first_vector, r.getVector());
+}
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
