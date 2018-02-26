@@ -1,0 +1,8 @@
+//
+// Created by fisent on 2/26/18.
+//
+
+#ifndef GENETICALGORITHM_RANDOM_H
+#define GENETICALGORITHM_RANDOM_H
+
+#endif //GENETICALGORITHM_RANDOM_H
