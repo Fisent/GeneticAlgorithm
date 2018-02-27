@@ -1,6 +1,7 @@
 #include "Result.h"
 #include <vector>
 #include <iostream>
+#include <algorithm>
 #include "Random.h"
 
 
@@ -17,9 +18,9 @@ Result::Result(int N) {
     this->N = N;
     this->res = std::vector<int>();
     for(int i = 0; i < N; i++){
-        int r = random(N);
-        res.push_back(r);
+        res.push_back(i);
     }
+    std::random_shuffle(res.begin(), res.end());
 }
 
 void Result::mutate() {
@@ -33,4 +34,13 @@ void Result::mutate() {
     int second = res.at(random_index_second);
     res[random_index] = second;
     res[random_index_second] = first;
+}
+
+std::string Result::toString() {
+    std::string result = "Result [";
+    for(auto i : res){
+        result += std::to_string(i) + ", ";
+    }
+    result += "]";
+    return result;
 }

@@ -10,6 +10,7 @@ public:
     explicit Result(std::vector<int>);
     explicit Result(int N);
     void mutate();
+    std::string toString();
 private:
     int N;
 };

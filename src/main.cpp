@@ -8,9 +8,12 @@
 
 #include <fstream>
 #include <sstream>
+#include <algorithm>
+#include <iterator>
 
 int main(){
-    auto rand = std::default_random_engine(std::chrono::system_clock::now().time_since_epoch().count());
-    std::cout << rand() % 10 << std::endl;
-    std::cout << std::rand() % 10 << std::endl;
+    Result r(12);
+    std::cout << r.toString();
+    Result r2(12);
+    std::cout << r2.toString();
 }
