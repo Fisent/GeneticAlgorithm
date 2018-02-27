@@ -16,6 +16,9 @@ public:
     Problem* getProblem();
     std::vector<Result*>* getPopulation();
     void step();
+
+    static void crossover(Result &result, Result &r2);
+
 private:
     int pop_size;
     int gen;

@@ -149,25 +149,30 @@ TEST(EvolutionTest, EvolutionRunsStepOfEvolution){
     e.step();
 }
 
-TEST (ResultEvolutionFunctions, ResultMutation){
+TEST (EvolutionFunctions, ResultMutation){
     Result r(12);
     r.mutate();
 }
 
-TEST (ResultEvolutionFunctions, ResultMutationChangesVector){
+TEST (EvolutionFunctions, ResultMutationChangesVector){
     Result r(12);
     auto first_vector = r.getVector();
     r.mutate();
     ASSERT_NE(first_vector, r.getVector());
 }
 
-TEST (ResultEvolutionFunctions, ResultMutationWorksProperly) {
+TEST (EvolutionFunctions, ResultMutationWorksProperly) {
     std::set<int> set;
     Result r(12);
     for (auto a : r.getVector()){
         set.insert(a);
     }
     ASSERT_EQ(set.size(), 12);
+}
+
+TEST (EvolutionFunctions, CrossoverExists){
+    Result r1(12), r2(12);
+    Evolution::crossover(r1, r2);
 }
 
 int main(int argc, char **argv) {
