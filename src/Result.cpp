@@ -1,5 +1,6 @@
 #include "Result.h"
 #include <vector>
+#include <set>
 #include <iostream>
 #include <algorithm>
 #include "Random.h"
@@ -29,11 +30,14 @@ void Result::mutate() {
     while(random_index == random_index_second){
         random_index_second = random(N);
     }
-    std::cout << "First index: " << random_index << ", second index: " << random_index_second << std::endl;
     int first = res.at(random_index);
     int second = res.at(random_index_second);
     res[random_index] = second;
     res[random_index_second] = first;
+}
+
+Result& Result::crossover(Result& other){
+    return other;
 }
 
 std::string Result::toString() {
@@ -43,4 +47,15 @@ std::string Result::toString() {
     }
     result += "]";
     return result;
+}
+
+std::vector<int>& repair(std::vector<int>& vector){
+    int N = vector.size();
+    std::set<int> s;
+    for(int i = 0; i < N; i++){
+        s.insert(i);
+    }
+    for(int i = 0; i < vector.size(); i++){
+        
+    }
 }
