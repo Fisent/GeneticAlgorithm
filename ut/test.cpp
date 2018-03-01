@@ -111,7 +111,6 @@ TEST (SquareMatrixTest, MatrixMostAdvancedTest){
     ASSERT_EQ(sm.get(3,3), 18);
 }
 
-
 TEST (ResultTest, ResultsCostfunctionReturnsProperValue){
     FileReader fr;
     Problem newProblem(fr.toVector(fr.read("had12.dat")));
