@@ -29,7 +29,6 @@ void Result::mutate() {
     while(random_index == random_index_second){
         random_index_second = random(N);
     }
-    std::cout << "First index: " << random_index << ", second index: " << random_index_second << std::endl;
     int first = res.at(random_index);
     int second = res.at(random_index_second);
     res[random_index] = second;
