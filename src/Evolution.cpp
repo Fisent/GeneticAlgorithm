@@ -54,7 +54,3 @@ Evolution::~Evolution() {
     delete population;
     delete problem;
 }
-
-void Evolution::crossover(Result &result, Result &r2) {
-    
-};
