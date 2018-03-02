@@ -174,14 +174,28 @@ TEST (EvolutionFunctions, CrossoverExists){
     r1.crossover(r2);
 }
 
-TEST (EvolutionFunctions, CrossoverWorks){
-    Result r1(12), r2(12);
-    std::vector<int> v1 = r1.getVector();
-    std::vector<int> v2 = r2.getVector();
-    r2 = r1.crossover(r2);
-    ASSERT_NE(v1, r1.getVector());
-    ASSERT_NE(v2, r2.getVector());
+TEST (EvolutionFunctions, CheckUniquenessFunction){
+    Result r(12);
+    r.check_unique_values();
 }
+
+TEST (EvolutionFunctions, CheckUniquenessFunctionWorks){
+    Result r1(12);
+    ASSERT_TRUE(r1.check_unique_values());
+    std::vector<int> v{1,1,1,1,1,2,3};
+    Result r2(v);
+    ASSERT_FALSE(r2.check_unique_values());
+
+}
+
+//TEST (EvolutionFunctions, CrossoverWorks){
+//    Result r1(12), r2(12);
+//    std::vector<int> v1 = r1.getVector();
+//    std::vector<int> v2 = r2.getVector();
+//    r2 = r1.crossover(r2);
+//    ASSERT_NE(v1, r1.getVector());
+//    ASSERT_NE(v2, r2.getVector());
+//}
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);

@@ -49,13 +49,19 @@ std::string Result::toString() {
     return result;
 }
 
+bool Result::check_unique_values() {
+    std::set<int> s;
+    for(auto a : this->res){
+        s.insert(a);
+    }
+    return s.size() == res.size();
+}
+
 std::vector<int>& repair(std::vector<int>& vector){
     int N = vector.size();
-    std::set<int> s;
+    std::vector<int> result;
+    std::set<int> used_indexes;
     for(int i = 0; i < N; i++){
-        s.insert(i);
-    }
-    for(int i = 0; i < vector.size(); i++){
-        
+
     }
 }

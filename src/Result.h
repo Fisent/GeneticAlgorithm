@@ -12,6 +12,7 @@ public:
     void mutate();
     Result& crossover(Result& other);
     std::vector<int>& repair(std::vector<int>& vector);
+    bool check_unique_values();
     std::string toString();
     
 private:
