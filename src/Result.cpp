@@ -59,9 +59,12 @@ bool Result::check_unique_values() {
 
 std::vector<int>& repair(std::vector<int>& vector){
     int N = vector.size();
-    std::vector<int> result;
-    std::set<int> used_indexes;
+    std::set<int> used_values, remaining_values;
+    for(int i = 0; i < N; i++) remaining_values.insert(i);
     for(int i = 0; i < N; i++){
-
+        bool contains = used_values.find(vector.at(i)) != used_values.end();
+        if(contains){
+            //put radnom value from remaining_values into vector and then remove it from the remaining_values
+        }
     }
 }
