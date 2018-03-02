@@ -14,6 +14,12 @@ std::string FileReader::read(std::string filename){
     return output;
 }
 
+//
+//int number;
+//while(file >> number){
+//    tab[i] = number;
+//}
+
 std::vector<int> FileReader::toVector(std::string input) {
     input += "   ";
     std::vector<int> result;
