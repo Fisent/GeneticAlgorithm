@@ -15,8 +15,9 @@ Problem::Problem(std::vector<int> input) {
     for(int i = N*N + 1; i < input.size(); i++){
         flowVector.push_back(input[i]);
     }
-    this->flowMatrix = new SquareMatrix(N, flowVector);
     this->distanceMatrix = new SquareMatrix(N, distanceVector);
+    this->flowMatrix = new SquareMatrix(N, flowVector);
+
 }
 
 SquareMatrix *Problem::getFlowMatrix() {

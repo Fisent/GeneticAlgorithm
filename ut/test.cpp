@@ -179,6 +179,10 @@ TEST (EvolutionFunctions, CheckUniquenessFunction){
     r.check_unique_values();
 }
 
+TEST (EvolutionFunctions, RepairWorks){
+
+}
+
 TEST (EvolutionFunctions, CheckUniquenessFunctionWorks){
     Result r1(12);
     ASSERT_TRUE(r1.check_unique_values());
@@ -188,14 +192,15 @@ TEST (EvolutionFunctions, CheckUniquenessFunctionWorks){
 
 }
 
-TEST (EvolutionFunctions, CrossoverWorks){
-    Result r1(12), r2(12);
-    std::vector<int> v1 = r1.getVector();
-    std::vector<int> v2 = r2.getVector();
-    r2 = r1.crossover(r2);
-    ASSERT_NE(v1, r1.getVector());
-    ASSERT_NE(v2, r2.getVector());
-}
+//
+//TEST (EvolutionFunctions, CrossoverWorks){
+//    Result r1(12), r2(12);
+//    std::vector<int> v1 = r1.getVector();
+//    std::vector<int> v2 = r2.getVector();
+//    r2 = r1.crossover(r2);
+//    ASSERT_NE(v1, r1.getVector());
+//    ASSERT_NE(v2, r2.getVector());
+//}
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
