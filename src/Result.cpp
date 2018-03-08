@@ -24,20 +24,27 @@ Result::Result(int N) {
     std::random_shuffle(res.begin(), res.end());
 }
 
-void Result::mutate() {
-    int random_index = random(N);
+void Result::mutate(float probability) {
+    for(int i = 0; i < this->res.size(); i++){
+        if(random_float(1.0) > probability){
+            this->mutate(i);
+        }
+    }
+}
+
+void Result::flip(int index){
     int random_index_second = random(N);
-    while(random_index == random_index_second){
+    while(index == random_index_second){
         random_index_second = random(N);
     }
-    int first = res.at(random_index);
+    int first = res.at(index);
     int second = res.at(random_index_second);
-    res[random_index] = second;
+    res[index] = second;
     res[random_index_second] = first;
 }
 
-Result& Result::crossover(Result& other){
-    return other;
+std::pair<Result&, Result&> Result::crossover(Result& other){
+    return std::pair<Result&, Result&>(*this, other);
 }
 
 std::string Result::toString() {

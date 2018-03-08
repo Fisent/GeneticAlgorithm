@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
 #include <vector>
+#include <utility>
 #include "../src/FileReader.h"
 #include "../src/Problem.h"
 #include "../src/Result.h"
@@ -150,13 +151,13 @@ TEST(EvolutionTest, EvolutionRunsStepOfEvolution){
 
 TEST (EvolutionFunctions, ResultMutation){
     Result r(12);
-    r.mutate();
+    r.mutate(0.1);
 }
 
 TEST (EvolutionFunctions, ResultMutationChangesVector){
     Result r(12);
     auto first_vector = r.getVector();
-    r.mutate();
+    r.mutate(0.1);
     ASSERT_NE(first_vector, r.getVector());
 }
 
@@ -192,9 +193,9 @@ TEST (EvolutionFunctions, CrossoverWorks){
     Result r1(12), r2(12);
     std::vector<int> v1 = r1.getVector();
     std::vector<int> v2 = r2.getVector();
-    r2 = r1.crossover(r2);
-    ASSERT_NE(v1, r1.getVector());
-    ASSERT_NE(v2, r2.getVector());
+    auto pair = r1.crossover(r2);
+    ASSERT_NE(v1, pair.first.getVector());
+    ASSERT_NE(v2, pair.second.getVector());
 }
 
 int main(int argc, char **argv) {
