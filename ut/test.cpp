@@ -180,6 +180,10 @@ TEST (EvolutionFunctions, CheckUniquenessFunction){
     r.check_unique_values();
 }
 
+TEST (EvolutionFunctions, RepairWorks){
+
+}
+
 TEST (EvolutionFunctions, CheckUniquenessFunctionWorks){
     Result r1(12);
     ASSERT_TRUE(r1.check_unique_values());
