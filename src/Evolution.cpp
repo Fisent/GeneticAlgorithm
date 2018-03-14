@@ -47,6 +47,9 @@ Problem* Evolution::getProblem() {
 }
 
 void Evolution::step() {
+    for(auto r : *population){
+        r->mutate(pm);
+    }
     //mutation
     //crossover
     //tournament
@@ -55,4 +58,12 @@ void Evolution::step() {
 Evolution::~Evolution() {
     delete population;
     delete problem;
+}
+
+std::vector<int> &Evolution::getPopulationCosts() {
+    std::vector<int> result;
+    for(auto animal : *population){
+        result.push_back(problem->costFunction(*animal));
+    }
+    return result;
 }

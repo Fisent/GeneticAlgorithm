@@ -16,6 +16,7 @@ public:
     Problem* getProblem();
     std::vector<Result*>* getPopulation();
     void step();
+    std::vector<int>& getPopulationCosts();
 
 private:
     int pop_size;
