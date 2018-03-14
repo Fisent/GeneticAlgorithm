@@ -149,30 +149,30 @@ TEST(EvolutionTest, EvolutionRunsStepOfEvolution){
     e.step();
 }
 
-//TEST (EvolutionFunctions, ResultMutation){
-//    Result r(12);
-//    r.mutate(0.1);
-//}
+TEST (EvolutionFunctions, ResultMutation){
+    Result r(12);
+    r.mutate(0.1);
+}
 
-//TEST (EvolutionFunctions, ResultMutationChangesVector){
-//    Result r(12);
-//    auto first_vector = r.getVector();
-//    r.mutate(0.1);
-//    ASSERT_NE(first_vector, r.getVector());
-//}
+TEST (EvolutionFunctions, ResultMutationChangesVector){
+    Result r(12);
+    auto first_vector = r.getVector();
+    r.mutate(0.1);
+    ASSERT_NE(first_vector, r.getVector());
+}
 
-//TEST (EvolutionFunctions, ResultMutationWorksProperly) {
-//    std::set<int> set;
-//    Result r(12);
-//    for (auto a : r.getVector()){
-//        set.insert(a);
-//    }
-//    ASSERT_EQ(set.size(), 12);
-//}
+TEST (EvolutionFunctions, ResultMutationWorksProperly) {
+    std::set<int> set;
+    Result r(12);
+    for (auto a : r.getVector()){
+        set.insert(a);
+    }
+    ASSERT_EQ(set.size(), 12);
+}
 
 TEST (EvolutionFunctions, CrossoverExists){
     Result r1(12), r2(12);
-    r1.crossover(r2);
+    r1.crossover(r2, 1);
 }
 
 TEST (EvolutionFunctions, CheckUniquenessFunction){
@@ -180,9 +180,6 @@ TEST (EvolutionFunctions, CheckUniquenessFunction){
     r.check_unique_values();
 }
 
-TEST (EvolutionFunctions, RepairWorks){
-
-}
 
 TEST (EvolutionFunctions, CheckUniquenessFunctionWorks){
     Result r1(12);
@@ -197,16 +194,32 @@ TEST (EvolutionFunctions, FlipWorks){
     Result r1(12);
     Result r2 = r1;
     r1.flip(0);
-    ASSERT_EQ(r1.getVector(), r2.getVector());
+    ASSERT_NE(r1.getVector(), r2.getVector());
 }
 
 TEST (EvolutionFunctions, CrossoverWorks){
     Result r1(12), r2(12);
     std::vector<int> v1 = r1.getVector();
     std::vector<int> v2 = r2.getVector();
-    auto pair = r1.crossover(r2);
+    auto pair = r1.crossover(r2, 1);
     ASSERT_NE(v1, pair.first.getVector());
     ASSERT_NE(v2, pair.second.getVector());
+}
+
+TEST (EvolutionFunctions, RepairWorks){
+    Result r1(12);
+    Result r2(12);
+    r1.crossover(r2, 1);
+
+    std::set<int> set1, set2;
+    for(int i = 0; i < r1.res.size(); i++){
+        set1.insert(r1.res.at(i));
+        set2.insert(r2.res.at(i));
+    }
+
+    ASSERT_EQ(set1.size(), set2.size());
+    ASSERT_EQ(set1.size(), 12);
+
 }
 
 int main(int argc, char **argv) {

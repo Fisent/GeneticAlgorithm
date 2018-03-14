@@ -43,8 +43,30 @@ void Result::flip(int index){
     res[random_index_second] = first;
 }
 
-std::pair<Result&, Result&> Result::crossover(Result& other){
-    return std::pair<Result&, Result&>(*this, other);
+std::pair<Result&, Result&> Result::crossover(Result& other, double probability){
+
+    std::pair<Result&, Result&> result(*this, other);
+
+    std::vector<int> myNewGenes = res;
+    std::vector<int> othersNewGenes = other.res;
+
+    float rand = random_float(1.0);
+    std::cout << rand << std::endl;
+    if(random_float(1.0) < probability){
+        int position = random(N);
+
+        for(int i = position; i < other.N; i++){
+            myNewGenes[i] = other.res[i];
+            othersNewGenes[i] = res[i];
+        }
+        result.first.res = myNewGenes;
+        result.second.res = othersNewGenes;
+    }
+
+    result.first.repair();
+    result.second.repair();
+
+    return result;
 }
 
 std::string Result::toString() {
@@ -64,14 +86,24 @@ bool Result::check_unique_values() {
     return s.size() == res.size();
 }
 
-std::vector<int>& repair(std::vector<int>& vector){
-    int N = vector.size();
-    std::set<int> used_values, remaining_values;
-    for(int i = 0; i < N; i++) remaining_values.insert(i);
-    for(int i = 0; i < N; i++){
-        bool contains = used_values.find(vector.at(i)) != used_values.end();
-        if(contains){
-            //put radnom value from remaining_values into vector and then remove it from the remaining_values
+int Result::findByValue(int value) {
+    for (int i = 0; i < N; i++) {
+        if (res[i] == (int) value)
+            return i;
+    }
+    return -1;
+}
+
+Result& Result::repair(){
+
+    for(int i = 0; i < N; i++) {
+        for(int j = N; j > 0; j--){
+            int number = 0;
+            for(int k = 1; k < N + 1; k++){
+                if(findByValue(k) == -1) number = k;
+            }
+            if(findByValue(i + 1) == findByValue(j + 1) && number != 0)
+                res[j] = number;
         }
     }
 }
