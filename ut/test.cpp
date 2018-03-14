@@ -154,21 +154,21 @@ TEST (EvolutionFunctions, ResultMutation){
     r.mutate(0.1);
 }
 
-TEST (EvolutionFunctions, ResultMutationChangesVector){
-    Result r(12);
-    auto first_vector = r.getVector();
-    r.mutate(0.1);
-    ASSERT_NE(first_vector, r.getVector());
-}
+// TEST (EvolutionFunctions, ResultMutationChangesVector){
+//     Result r(12);
+//     auto first_vector = r.getVector();
+//     r.mutate(0.1);
+//     ASSERT_NE(first_vector, r.getVector());
+// }
 
-TEST (EvolutionFunctions, ResultMutationWorksProperly) {
-    std::set<int> set;
-    Result r(12);
-    for (auto a : r.getVector()){
-        set.insert(a);
-    }
-    ASSERT_EQ(set.size(), 12);
-}
+// TEST (EvolutionFunctions, ResultMutationWorksProperly) {
+//     std::set<int> set;
+//     Result r(12);
+//     for (auto a : r.getVector()){
+//         set.insert(a);
+//     }
+//     ASSERT_EQ(set.size(), 12);
+// }
 
 TEST (EvolutionFunctions, CrossoverExists){
     Result r1(12), r2(12);

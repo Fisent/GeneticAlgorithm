@@ -24,10 +24,10 @@ Result::Result(int N) {
     std::random_shuffle(res.begin(), res.end());
 }
 
-void Result::mutate(float probability) {
+void Result::mutate(double probability) {
     for(int i = 0; i < this->res.size(); i++){
         if(random_float(1.0) > probability){
-            this->mutate(i);
+            this->flip(i);
         }
     }
 }
