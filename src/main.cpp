@@ -12,8 +12,7 @@
 #include <iterator>
 
 int main(){
-    Result r(12);
-    std::cout << r.toString();
-    Result r2(12);
-    std::cout << r2.toString();
+    Evolution e(100, 100, 0.1, 0.1, 5, "had12.dat");
+    std::cout << e.get_pop_size();
+    e.step();
 }

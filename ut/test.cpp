@@ -149,26 +149,26 @@ TEST(EvolutionTest, EvolutionRunsStepOfEvolution){
     e.step();
 }
 
-TEST (EvolutionFunctions, ResultMutation){
-    Result r(12);
-    r.mutate(0.1);
-}
+//TEST (EvolutionFunctions, ResultMutation){
+//    Result r(12);
+//    r.mutate(0.1);
+//}
 
-TEST (EvolutionFunctions, ResultMutationChangesVector){
-    Result r(12);
-    auto first_vector = r.getVector();
-    r.mutate(0.1);
-    ASSERT_NE(first_vector, r.getVector());
-}
+//TEST (EvolutionFunctions, ResultMutationChangesVector){
+//    Result r(12);
+//    auto first_vector = r.getVector();
+//    r.mutate(0.1);
+//    ASSERT_NE(first_vector, r.getVector());
+//}
 
-TEST (EvolutionFunctions, ResultMutationWorksProperly) {
-    std::set<int> set;
-    Result r(12);
-    for (auto a : r.getVector()){
-        set.insert(a);
-    }
-    ASSERT_EQ(set.size(), 12);
-}
+//TEST (EvolutionFunctions, ResultMutationWorksProperly) {
+//    std::set<int> set;
+//    Result r(12);
+//    for (auto a : r.getVector()){
+//        set.insert(a);
+//    }
+//    ASSERT_EQ(set.size(), 12);
+//}
 
 TEST (EvolutionFunctions, CrossoverExists){
     Result r1(12), r2(12);
@@ -191,6 +191,13 @@ TEST (EvolutionFunctions, CheckUniquenessFunctionWorks){
     Result r2(v);
     ASSERT_FALSE(r2.check_unique_values());
 
+}
+
+TEST (EvolutionFunctions, FlipWorks){
+    Result r1(12);
+    Result r2 = r1;
+    r1.flip(0);
+    ASSERT_EQ(r1.getVector(), r2.getVector());
 }
 
 TEST (EvolutionFunctions, CrossoverWorks){

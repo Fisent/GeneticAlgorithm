@@ -47,7 +47,9 @@ Problem* Evolution::getProblem() {
 }
 
 void Evolution::step() {
-
+    //mutation
+    //crossover
+    //tournament
 }
 
 Evolution::~Evolution() {
