@@ -9,7 +9,7 @@ int random(int max){
     return rand() % max;
 }
 
-float random_float(float max){
+double random_float(float max){
     auto rand = std::default_random_engine(std::chrono::system_clock::now().time_since_epoch().count());
     return rand();
 }
