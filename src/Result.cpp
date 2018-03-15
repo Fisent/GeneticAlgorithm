@@ -33,9 +33,9 @@ void Result::mutate(double probability) {
 }
 
 void Result::flip(int index){
-    int random_index_second = random(N);
+    int random_index_second = random_int(N);
     while(index == random_index_second){
-        random_index_second = random(N);
+        random_index_second = random_int(N);
     }
     int first = res.at(index);
     int second = res.at(random_index_second);
@@ -43,28 +43,27 @@ void Result::flip(int index){
     res[random_index_second] = first;
 }
 
-std::pair<Result&, Result&> Result::crossover(Result& other, double probability){
+std::pair<Result*, Result*> Result::crossover(Result* other, double probability){
 
-    std::pair<Result&, Result&> result(*this, other);
+    std::pair<Result*, Result*> result(this, other);
 
     std::vector<int> myNewGenes = res;
-    std::vector<int> othersNewGenes = other.res;
+    std::vector<int> othersNewGenes = other->res;
 
     float rand = random_float(1.0);
-    std::cout << rand << std::endl;
     if(random_float(1.0) < probability){
-        int position = random(N);
+        int position = random_int(N);
 
-        for(int i = position; i < other.N; i++){
-            myNewGenes[i] = other.res[i];
+        for(int i = position; i < other->N; i++){
+            myNewGenes[i] = other->res[i];
             othersNewGenes[i] = res[i];
         }
-        result.first.res = myNewGenes;
-        result.second.res = othersNewGenes;
+        result.first->res = myNewGenes;
+        result.second->res = othersNewGenes;
     }
 
-    result.first.repair();
-    result.second.repair();
+    result.first->repair();
+    result.second->repair();
 
     return result;
 }
@@ -99,10 +98,10 @@ Result& Result::repair(){
     for(int i = 0; i < N; i++) {
         for(int j = N; j > 0; j--){
             int number = 0;
-            for(int k = 1; k < N + 1; k++){
+            for(int k = 0; k < N; k++){
                 if(findByValue(k) == -1) number = k;
             }
-            if(findByValue(i + 1) == findByValue(j + 1) && number != 0)
+            if(findByValue(i) == findByValue(j) && number != 0)
                 res[j] = number;
         }
     }

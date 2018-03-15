@@ -33,7 +33,7 @@ int Problem::costFunction(Result &r) {
     for(int i = 0; i< N; i++){
         for(int j = 0; j<N; j++){
             int dist = distanceMatrix->get(i,j);
-            int flow = flowMatrix->get(r.getVector().at(i) -1, r.getVector().at(j) -1);
+            int flow = flowMatrix->get(r.getVector().at(i), r.getVector().at(j));
             result += dist * flow;
         }
     }

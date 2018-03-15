@@ -12,7 +12,7 @@ public:
     explicit Result(int N);
     void mutate(double probability);
     void flip(int index);
-    std::pair<Result&, Result&> crossover(Result& other, double probability);
+    std::pair<Result*, Result*> crossover(Result* other, double probability);
     Result& repair();
     bool check_unique_values();
     std::string toString();

@@ -1,7 +1,10 @@
 #include "Evolution.h"
-#include "Result.h"
 #include "FileReader.h"
+#include "Random.h"
 #include <string>
+#include <map>
+#include <iostream>
+#include <algorithm>
 
 Evolution::Evolution(int pop_size, int gen, float px, float pm, int tour, std::string filename) {
     this->pop_size = pop_size;
@@ -47,8 +50,21 @@ Problem* Evolution::getProblem() {
 }
 
 void Evolution::step() {
-    for(auto r : *population){
-        r->mutate(pm);
+
+    std::vector<Result*>* newPopulation = new std::vector<Result*>();
+    for(int i = 0; i < (population->size()/2); i++){
+        auto r1 = roulleteSelection();
+        auto r2 = roulleteSelection();
+        auto childPair = r1->crossover(r2, px);
+
+        newPopulation->push_back(childPair.first);
+        newPopulation->push_back(childPair.second);
+    }
+
+    population = newPopulation;
+
+    for(auto animal : *population){
+        animal->mutate(pm);
     }
     //mutation
     //crossover
@@ -61,9 +77,36 @@ Evolution::~Evolution() {
 }
 
 std::vector<int> &Evolution::getPopulationCosts() {
-    std::vector<int> result;
+    std::vector<int>* result = new std::vector<int>();
     for(auto animal : *population){
-        result.push_back(problem->costFunction(*animal));
+        result->push_back(problem->costFunction(*animal));
     }
-    return result;
+    return *result;
+}
+
+Result *Evolution::roulleteSelection() {
+    int sum_of_weights = 0;
+    std::sort(population->begin(), population->end(), [this](Result* r1, Result* r2){return problem->costFunction(*r1) < problem->costFunction(*r2);});
+    for(auto eleme)
+    for(auto animal : *population){
+        sum_of_weights += problem->costFunction(*animal);
+    }
+    int random = random_int(sum_of_weights);
+
+    for(auto animal : *population){
+        int weight = problem->costFunction(*animal);
+        if(random < weight){
+            std::cout << problem->costFunction(*animal) << ", " << getAverageCost() << std::endl;
+            return animal;
+        }
+        random -= weight;
+    }
+}
+
+double Evolution::getAverageCost() {
+    double result = 0;
+    for(auto animal : *population){
+        result += problem->costFunction(*animal);
+    }
+    return result / population->size();
 }

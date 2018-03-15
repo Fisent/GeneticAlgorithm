@@ -4,7 +4,7 @@ project(GeneticAlgorithm)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(CMAKE_BUILD_TYPE Debug)
 
-add_library(genetics src/Result.cpp src/FileReader.cpp src/Problem.cpp src/SquareMatrix.cpp src/Evolution.cpp src/Random.h)
+add_library(genetics src/Result.cpp src/FileReader.cpp src/Problem.cpp src/SquareMatrix.cpp src/Evolution.cpp src/Random.h src/Random.cpp)
 
 
 add_executable(GeneticAlgorithm src/main.cpp)

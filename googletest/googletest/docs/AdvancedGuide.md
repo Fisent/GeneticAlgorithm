@@ -1939,7 +1939,7 @@ to do the default behavior of calculating the seed from the current
 time.
 
 If you combine this with `--gtest_repeat=N`, Google Test will pick a
-different random seed and re-shuffle the tests in each iteration.
+different random_int seed and re-shuffle the tests in each iteration.
 
 _Availability:_ Linux, Windows, Mac; since v1.4.0.
 
