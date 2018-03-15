@@ -87,7 +87,12 @@ std::vector<int> &Evolution::getPopulationCosts() {
 Result *Evolution::roulleteSelection() {
     int sum_of_weights = 0;
     std::sort(population->begin(), population->end(), [this](Result* r1, Result* r2){return problem->costFunction(*r1) < problem->costFunction(*r2);});
-    for(auto eleme)
+    for(auto element : *population) {
+
+        for(auto gene : element->res)std::cout << gene << ", ";
+        std::cout << std::endl;
+    }
+    std::cout << std::endl;
     for(auto animal : *population){
         sum_of_weights += problem->costFunction(*animal);
     }
