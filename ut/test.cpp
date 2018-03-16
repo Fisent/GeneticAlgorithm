@@ -197,14 +197,19 @@ TEST (EvolutionFunctions, FlipWorks){
     ASSERT_NE(r1.getVector(), r2.getVector());
 }
 
-//TEST (EvolutionFunctions, CrossoverWorks){
-//    Result r1(12), r2(12);
-//    std::vector<int> v1 = r1.getVector();
-//    std::vector<int> v2 = r2.getVector();
-//    auto pair = r1.crossover(r2, 1);
-//    ASSERT_NE(v1, pair.first.getVector());
-//    ASSERT_NE(v2, pair.second.getVector());
-//}
+TEST (EvolutionFunctions, CrossoverWorks){
+   Result* r1 = new Result(12);
+   Result* r2 = new Result(12);
+   for(auto a : r1->res) std::cout << a << ", "; std::cout << std::endl;
+   for(auto a : r2->res) std::cout << a << ", "; std::cout << std::endl;
+   std::vector<int> v1 = r1->getVector();
+   std::vector<int> v2 = r2->getVector();
+   auto pair = r1->crossover(r2, 1);
+   ASSERT_NE(v1, pair.first->getVector());
+   for(auto a : v1) std::cout << a << ", "; std::cout << std::endl;
+   for(auto a : v2) std::cout << a << ", "; std::cout << std::endl;
+   ASSERT_NE(v2, pair.second->getVector());
+}
 //
 //TEST (EvolutionFunctions, RepairWorks){
 //    Result r1(12);

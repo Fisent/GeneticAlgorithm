@@ -59,16 +59,21 @@ void Evolution::step() {
         population->at(i) = childPair.first;
         population->at(i+1) = childPair.second;
     }
+
+
     std::vector<Result*> *newPopulation = new std::vector<Result*>;
     for(int i = 0; i < pop_size; i++){
         std::vector<Result*> tournament;
         for(int j = 0; j < tour; j++){
             int random_index = random_int(population->size());
             tournament.push_back(population->at(random_index));
-            std::sort(tournament.begin(), tournament.end(), [this](Result* r1, Result* r2){return problem->costFunction(*r1) > problem->costFunction(*r2);});
+            std::sort(tournament.begin(), tournament.end(), [this](Result* r1, Result* r2){return problem->costFunction(*r1) < problem->costFunction(*r2);});
         }
         newPopulation->push_back(tournament[0]);
     }
+
+    //delete population;
+    population = newPopulation;
 
     for(auto animal : *population){
         animal->mutate(pm);
@@ -97,7 +102,7 @@ Result* Evolution::rankingSelection(){
         int random_index = random_int(population->size());
         tournament.push_back(population->at(random_index));
     }
-    std::sort(tournament.begin(), tournament.end(), [this](Result* r1, Result* r2){return this->problem->costFunction(*r1) > this->problem->costFunction(*r2);});
+    std::sort(tournament.begin(), tournament.end(), [this](Result* r1, Result* r2){return this->problem->costFunction(*r1) < this->problem->costFunction(*r2);});
     // std::cout << problem->costFunction(*tournament[0]) << std::endl;
     return tournament[0];
 }
