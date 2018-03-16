@@ -50,7 +50,7 @@ Problem* Evolution::getProblem() {
 }
 
 void Evolution::step() {
-
+    std::sort(population->begin(), population->end(), [this](Result* r1, Result* r2){return problem->costFunction(*r1) < problem->costFunction(*r2);});
     std::vector<Result*>* newPopulation = new std::vector<Result*>();
     for(int i = 0; i < (population->size()/2); i++){
         auto r1 = roulleteSelection();
@@ -62,6 +62,7 @@ void Evolution::step() {
     }
 
     population = newPopulation;
+
 
     for(auto animal : *population){
         animal->mutate(pm);
@@ -86,11 +87,8 @@ std::vector<int> &Evolution::getPopulationCosts() {
 
 Result *Evolution::roulleteSelection() {
     int sum_of_weights = 0;
-    std::sort(population->begin(), population->end(), [this](Result* r1, Result* r2){return problem->costFunction(*r1) < problem->costFunction(*r2);});
     for(auto element : *population) {
-
-        for(auto gene : element->res)std::cout << gene << ", ";
-        std::cout << std::endl;
+        std::cout << problem->costFunction(*element) << ", ";
     }
     std::cout << std::endl;
     for(auto animal : *population){
