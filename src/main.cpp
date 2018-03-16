@@ -14,8 +14,10 @@
 int main(){
     Evolution e(100, 100, 0.7, 0.01, 5, "had12.dat");
     for(int i = 0; i < 100; i++) {
+        //std::cout << e.problem->costFunction(*e.rankingSelection()) << std::endl;
         e.step();
-        std::cout << e.getAverageCost() << std::endl;
+        // for(auto element : *e.population) std::cout << e.problem->costFunction(*element) << ", "; std::cout << std::endl;
+        std::cout << e.problem->costFunction(*e.rankingSelection()) << ", " << e.getAverageCost() << std::endl;
     }
 //
 //    for(auto a : *e.getPopulation()){

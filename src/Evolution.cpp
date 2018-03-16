@@ -50,19 +50,25 @@ Problem* Evolution::getProblem() {
 }
 
 void Evolution::step() {
-    std::sort(population->begin(), population->end(), [this](Result* r1, Result* r2){return problem->costFunction(*r1) < problem->costFunction(*r2);});
-    std::vector<Result*>* newPopulation = new std::vector<Result*>();
-    for(int i = 0; i < (population->size()/2); i++){
-        auto r1 = roulleteSelection();
-        auto r2 = roulleteSelection();
+    //std::sort(population->begin(), population->end(), [this](Result* r1, Result* r2){return problem->costFunction(*r1) < problem->costFunction(*r2);});
+    for(int i = 0; i < pop_size * px; i++){
+        auto r1 = rankingSelection();
+        auto r2 = rankingSelection();
         auto childPair = r1->crossover(r2, px);
 
-        newPopulation->push_back(childPair.first);
-        newPopulation->push_back(childPair.second);
+        population->at(i) = childPair.first;
+        population->at(i+1) = childPair.second;
     }
-
-    population = newPopulation;
-
+    std::vector<Result*> *newPopulation = new std::vector<Result*>;
+    for(int i = 0; i < pop_size; i++){
+        std::vector<Result*> tournament;
+        for(int j = 0; j < tour; j++){
+            int random_index = random_int(population->size());
+            tournament.push_back(population->at(random_index));
+            std::sort(tournament.begin(), tournament.end(), [this](Result* r1, Result* r2){return problem->costFunction(*r1) > problem->costFunction(*r2);});
+        }
+        newPopulation->push_back(tournament[0]);
+    }
 
     for(auto animal : *population){
         animal->mutate(pm);
@@ -85,26 +91,42 @@ std::vector<int> &Evolution::getPopulationCosts() {
     return *result;
 }
 
-Result *Evolution::roulleteSelection() {
-    int sum_of_weights = 0;
-    for(auto element : *population) {
-        std::cout << problem->costFunction(*element) << ", ";
+Result* Evolution::rankingSelection(){
+    std::vector <Result*> tournament;
+    for(int i = 0; i < tour; i++){
+        int random_index = random_int(population->size());
+        tournament.push_back(population->at(random_index));
     }
-    std::cout << std::endl;
-    for(auto animal : *population){
-        sum_of_weights += problem->costFunction(*animal);
-    }
-    int random = random_int(sum_of_weights);
-
-    for(auto animal : *population){
-        int weight = problem->costFunction(*animal);
-        if(random < weight){
-            std::cout << problem->costFunction(*animal) << ", " << getAverageCost() << std::endl;
-            return animal;
-        }
-        random -= weight;
-    }
+    std::sort(tournament.begin(), tournament.end(), [this](Result* r1, Result* r2){return this->problem->costFunction(*r1) > this->problem->costFunction(*r2);});
+    // std::cout << problem->costFunction(*tournament[0]) << std::endl;
+    return tournament[0];
 }
+
+// Result *Evolution::roulleteSelection() {
+//     int sum_of_weights = 0;
+//     std::vector<double> probabilities;
+//     for(auto element : *population) {
+//         // std::cout << problem->costFunction(*element) << ", ";
+//         sum_of_weights += problem->costFunction(*element);
+//     }
+//     for(auto element : *population){
+//         probabilities.push_back();
+//     }
+//     // std::cout << std::endl;
+//     for(auto animal : *population){
+//         sum_of_weights += problem->costFunction(*animal);
+//     }
+//     int random = random_int(sum_of_weights);
+
+//     for(auto animal : *population){
+//         int weight = problem->costFunction(*animal);
+//         if(random < weight){
+//             std::cout << problem->costFunction(*animal) << ", " << getAverageCost() << std::endl;
+//             return animal;
+//         }
+//         random -= weight;
+//     }
+// }
 
 double Evolution::getAverageCost() {
     double result = 0;

@@ -18,6 +18,7 @@ public:
     void step();
     std::vector<int>& getPopulationCosts();
     Result* roulleteSelection();
+    Result* rankingSelection();
     double getAverageCost();
 
     int pop_size;
