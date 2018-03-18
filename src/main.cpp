@@ -34,7 +34,7 @@ void run(){
 
 void repair_check(){
     bool result = true;
-    for(int i = 0; i < 100000; i++) {
+    for(int i = 0; i < 10000000; i++) {
         if (i % 1000 == 0) std::cout << i << std::endl;
         Result *r1 = new Result(12);
         Result *r2 = new Result(12);
