@@ -204,28 +204,28 @@ TEST (EvolutionFunctions, CrossoverWorks){
    for(auto a : r2->res) std::cout << a << ", "; std::cout << std::endl;
    std::vector<int> v1 = r1->getVector();
    std::vector<int> v2 = r2->getVector();
-   auto pair = r1->crossover(r2, 1);
+   auto pair = r1->crossover(r2, 1.);
    ASSERT_NE(v1, pair.first->getVector());
    for(auto a : v1) std::cout << a << ", "; std::cout << std::endl;
    for(auto a : v2) std::cout << a << ", "; std::cout << std::endl;
    ASSERT_NE(v2, pair.second->getVector());
 }
-//
-//TEST (EvolutionFunctions, RepairWorks){
-//    Result r1(12);
-//    Result r2(12);
-//    r1.crossover(r2, 1);
-//
-//    std::set<int> set1, set2;
-//    for(int i = 0; i < r1.res.size(); i++){
-//        set1.insert(r1.res.at(i));
-//        set2.insert(r2.res.at(i));
-//    }
-//
-//    ASSERT_EQ(set1.size(), set2.size());
-//    ASSERT_EQ(set1.size(), 12);
-//
-//}
+
+TEST (EvolutionFunctions, RepairWorks){
+    Result* r1 = new Result(12);
+    Result* r2 = new Result(12);
+    r1->crossover(r2, 1.);
+
+    std::set<int> set1, set2;
+    for(int i = 0; i < r1->res.size(); i++){
+        set1.insert(r1->res.at(i));
+        set2.insert(r2->res.at(i));
+    }
+
+    ASSERT_EQ(set1.size(), set2.size());
+    ASSERT_EQ(set1.size(), 12);
+
+}
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);

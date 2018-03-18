@@ -12,26 +12,13 @@
 #include <iterator>
 
 int main(){
-    Evolution e(100, 100, 0.7, 0.3, 5, "had12.dat");
-    for(int i = 0; i < 100; i++) {
-        // std::cout << e.problem->costFunction(*e.rankingSelection()) << std::endl;
-        e.step();
-        std::cout << e.getAverageCost() << std::endl;
-        // for(auto element : e.rankingSelection()->res) std::cout << element << ", ";std::cout << std::endl; 
-    }
-//
-//    for(auto a : *e.getPopulation()){
-//        for(auto element : a->res) std::cout << element << ", ";
-//        std::cout << std::endl;
-//    }
-//
-//    std::cout << "costs: " << std::endl;
-//    auto problem = e.getProblem();
-//    std::cout << problem->getN();
-//    for(auto a : *e.getPopulation()){
-//        problem->costFunction(*a);
-//    std::cout << costs->at(0);
-//    for(int i = 0; i < costs->size(); i++){
-//        std::cout << costs->at(i) << ", ";
-//    }
+    Evolution e(100, 100, 0.7, 0.01, 5, "had12.dat");
+
+    Result* r1 = new Result(12);
+    Result* r2 = new Result(12);
+    for(auto element : r1->res) std::cout << element << ", "; std::cout << std::endl;
+    for(auto element : r2->res) std::cout << element << ", "; std::cout << std::endl;
+    auto pair = r1->crossover(r2, 1);
+    for(auto element : pair.first->res) std::cout << element << ", "; std::cout << std::endl;
+    for(auto element : pair.first->res) std::cout << element << ", "; std::cout << std::endl;
 }

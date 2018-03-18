@@ -51,28 +51,26 @@ Problem* Evolution::getProblem() {
 
 void Evolution::step() {
     //std::sort(population->begin(), population->end(), [this](Result* r1, Result* r2){return problem->costFunction(*r1) < problem->costFunction(*r2);});
+    std::vector<Result*> *newPopulation = new std::vector<Result*>;
     for(int i = 0; i < pop_size * px; i++){
         auto r1 = rankingSelection();
         auto r2 = rankingSelection();
         auto childPair = r1->crossover(r2, px);
 
-        population->at(i) = childPair.first;
-        population->at(i+1) = childPair.second;
+        newPopulation->push_back(childPair.first);
+        newPopulation->push_back(childPair.second);
     }
 
-
-    std::vector<Result*> *newPopulation = new std::vector<Result*>;
-    for(int i = 0; i < pop_size; i++){
+    for(int i = 0; i < pop_size - (pop_size * px); i++){
         std::vector<Result*> tournament;
         for(int j = 0; j < tour; j++){
-            int random_index = random_int(population->size());
-            tournament.push_back(population->at(random_index));
-            std::sort(tournament.begin(), tournament.end(), [this](Result* r1, Result* r2){return problem->costFunction(*r1) < problem->costFunction(*r2);});
+            tournament.push_back(this->rankingSelection());
         }
         newPopulation->push_back(tournament[0]);
     }
 
     //delete population;
+    delete population;
     population = newPopulation;
 
     for(auto animal : *population){

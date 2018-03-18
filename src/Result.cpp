@@ -43,6 +43,7 @@ void Result::flip(int index){
     res[random_index_second] = first;
 }
 
+//TODO: debug crossover
 std::pair<Result*, Result*> Result::crossover(Result* other, double probability){
 
     std::pair<Result*, Result*> result(this, other);
@@ -94,7 +95,6 @@ int Result::findByValue(int value) {
 }
 
 Result& Result::repair(){
-
     for(int i = 0; i < N; i++) {
         for(int j = N; j > 0; j--){
             int number = 0;
