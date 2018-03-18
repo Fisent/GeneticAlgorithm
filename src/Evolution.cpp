@@ -5,6 +5,7 @@
 #include <map>
 #include <iostream>
 #include <algorithm>
+#include <iterator>
 
 Evolution::Evolution(int pop_size, int gen, float px, float pm, int tour, std::string filename) {
     this->pop_size = pop_size;
@@ -95,12 +96,12 @@ std::vector<int> &Evolution::getPopulationCosts() {
 }
 
 Result* Evolution::rankingSelection(){
-    std::vector <Result*> tournament;
+    std::vector<Result*> tournament(tour);
     for(int i = 0; i < tour; i++){
         int random_index = random_int(population->size());
-        tournament.push_back(population->at(random_index));
+        tournament[i] = population->at(random_index);
     }
-    std::sort(tournament.begin(), tournament.end(), [this](Result* r1, Result* r2){return this->problem->costFunction(*r1) < this->problem->costFunction(*r2);});
+    std::sort(std::begin(tournament), std::end(tournament), [this](Result* r1, Result* r2){return this->problem->costFunction(*r1) < this->problem->costFunction(*r2);});
     // std::cout << problem->costFunction(*tournament[0]) << std::endl;
     return tournament[0];
 }
