@@ -80,5 +80,5 @@ void selection_check(){
 }
 
 int main(){
-    selection_check();
+    run();
 }
