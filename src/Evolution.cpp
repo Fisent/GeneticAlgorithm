@@ -6,6 +6,7 @@
 #include <iostream>
 #include <algorithm>
 #include <iterator>
+#include <cassert>
 
 Evolution::Evolution(int pop_size, int gen, float px, float pm, int tour, std::string filename) {
     this->pop_size = pop_size;
@@ -51,27 +52,18 @@ Problem* Evolution::getProblem() {
 }
 
 void Evolution::step() {
-    //std::sort(population->begin(), population->end(), [this](Result* r1, Result* r2){return problem->costFunction(*r1) < problem->costFunction(*r2);});
     std::vector<Result*> *newPopulation = new std::vector<Result*>;
-    for(int i = 0; i < pop_size * px; i++){
-        auto r1 = rankingSelection();
-        auto r2 = rankingSelection();
-        r2 = r1->crossover(r2, px);
+    for(int i = 0; i < pop_size * px; i+=2){
+        newPopulation->push_back(rankingSelection());
+        newPopulation->push_back(rankingSelection());
+    }
+    for(auto a : *newPopulation)
+        a->crossover(newPopulation->at(random_int(newPopulation->size())), px);
 
-        newPopulation->push_back(r1);
-        newPopulation->push_back(r2);
+    while(newPopulation->size() < pop_size){
+        newPopulation->push_back(this->rankingSelection());
     }
 
-    for(int i = 0; i < pop_size - (pop_size * px); i++){
-        std::vector<Result*> tournament;
-        for(int j = 0; j < tour; j++){
-            tournament.push_back(this->rankingSelection());
-        }
-        newPopulation->push_back(tournament[0]);
-    }
-
-    //delete population;
-    delete population;
     population = newPopulation;
 
     for(auto animal : *population){
@@ -80,6 +72,7 @@ void Evolution::step() {
     //mutation
     //crossover
     //tournament
+    assert(pop_size == population->size());
 }
 
 Evolution::~Evolution() {

@@ -18,15 +18,15 @@ void check_crossover(){
     Result* r2 = new Result(12);
     for(auto element : r1->res) std::cout << element << ", "; std::cout << std::endl;
     for(auto element : r2->res) std::cout << element << ", "; std::cout << std::endl;
-    for(int i = 0; i < 100; i++) r2 = r1->crossover(r2, 1);
+    for(int i = 0; i < 100; i++) r1->crossover(r2, 1);
     std::cout << "crossover" << std::endl;
     for(auto element : r1->res) std::cout << element << ", "; std::cout << std::endl;
     for(auto element : r2->res) std::cout << element << ", "; std::cout << std::endl;
 }
 
 void run(){
-    Evolution e(100, 100, 0.7, 0.01, 5, "had12.dat");
-    for(int i = 0; i < 100; i ++ ){
+    Evolution e(1000, 100, 0.7, 0.1, 10, "had12.dat");
+    for(int i = 0; i < 1000; i ++ ){
         e.step();
         std::cout << e.getAverageCost() << std::endl;
     }
@@ -78,6 +78,20 @@ void selection_check(){
     }
 }
 
+void run_from_optimum(){
+    Evolution e(100, 100, 0.7, 1, 5, "had12.dat");
+    e.population = new std::vector<Result*>;
+    for(int i = 0; i < e.pop_size; i++) {
+        std::vector<int> v{3 - 1, 10 - 1, 11 - 1, 2 - 1, 12 - 1, 5 - 1, 6 - 1, 7 - 1, 8 - 1, 1 - 1, 4 - 1, 9 - 1};
+        Result *res = new Result(v);
+        e.population->push_back(res);
+    }
+    for(int i = 0; i < 100; i ++ ){
+        e.step();
+        std::cout << e.getAverageCost() << std::endl;
+    }
+}
+
 int main(){
-    check_crossover();
+    selection_check();
 }

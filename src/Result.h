@@ -12,7 +12,7 @@ public:
     explicit Result(int N);
     void mutate(double probability);
     void flip(int index);
-    Result* crossover(Result* other, double probability);
+    void crossover(Result* other, double probability);
     Result& repair();
     bool check_unique_values();
     std::string toString();

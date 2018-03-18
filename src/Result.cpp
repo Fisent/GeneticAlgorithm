@@ -25,8 +25,9 @@ Result::Result(int N) {
 }
 
 void Result::mutate(double probability) {
-    for(int i = 0; i < this->res.size(); i++){
-        if(random_float(1.0) > probability){
+    double rand = random_float(1.0);
+    for(int i = 0; i < N; i++) {
+        if (rand < probability) {
             this->flip(i);
         }
     }
@@ -44,29 +45,17 @@ void Result::flip(int index){
 }
 
 //TODO: debug crossover
-Result* Result::crossover(Result* other, double probability){
-    Result *result1 = this;
-    Result *result2 = other;
-
-    std::vector<int> myNewGenes = res;
-    std::vector<int> othersNewGenes = other->res;
-
+void Result::crossover(Result* other, double probability){
     float rand = random_float(1.0);
     if(rand < probability){
-        int position = random_int(N);
-
-        for(int i = position; i < other->N; i++){
-            myNewGenes[i] = other->res[i];
-            othersNewGenes[i] = this->res[i];
+        int position = random_int(N/2) + N/2;
+        for(int i = position; i < N; i++){
+            other->res[i] = this->res[i];
+            this->res[i] = other->res[i];
         }
-        result1->res = myNewGenes;
-        result2->res = othersNewGenes;
     }
-
-    result1->repair();
-    result2->repair();
-
-    return result2;
+    this->repair();
+    other->repair();
 }
 
 std::string Result::toString() {

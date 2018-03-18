@@ -193,7 +193,7 @@ TEST (EvolutionFunctions, CheckUniquenessFunctionWorks){
 TEST (EvolutionFunctions, FlipWorks){
     Result r1(12);
     Result r2 = r1;
-    r1.flip(0);
+    r1.flip(1);
     ASSERT_NE(r1.getVector(), r2.getVector());
 }
 
@@ -204,7 +204,7 @@ TEST (EvolutionFunctions, CrossoverWorks){
    for(auto a : r2->res) std::cout << a << ", "; std::cout << std::endl;
    std::vector<int> v1 = r1->getVector();
    std::vector<int> v2 = r2->getVector();
-   r2 = r1->crossover(r2, 1.);
+   r1->crossover(r2, 1.);
    ASSERT_NE(v1, r1->getVector());
    for(auto a : v1) std::cout << a << ", "; std::cout << std::endl;
    for(auto a : v2) std::cout << a << ", "; std::cout << std::endl;
