@@ -44,29 +44,29 @@ void Result::flip(int index){
 }
 
 //TODO: debug crossover
-std::pair<Result*, Result*> Result::crossover(Result* other, double probability){
-
-    std::pair<Result*, Result*> result(this, other);
+Result* Result::crossover(Result* other, double probability){
+    Result *result1 = this;
+    Result *result2 = other;
 
     std::vector<int> myNewGenes = res;
     std::vector<int> othersNewGenes = other->res;
 
     float rand = random_float(1.0);
-    if(random_float(1.0) < probability){
+    if(rand < probability){
         int position = random_int(N);
 
         for(int i = position; i < other->N; i++){
             myNewGenes[i] = other->res[i];
-            othersNewGenes[i] = res[i];
+            othersNewGenes[i] = this->res[i];
         }
-        result.first->res = myNewGenes;
-        result.second->res = othersNewGenes;
+        result1->res = myNewGenes;
+        result2->res = othersNewGenes;
     }
 
-    result.first->repair();
-    result.second->repair();
+    result1->repair();
+    result2->repair();
 
-    return result;
+    return result2;
 }
 
 std::string Result::toString() {
@@ -97,11 +97,11 @@ int Result::findByValue(int value) {
 Result& Result::repair(){
     for(int i = 0; i < N; i++) {
         for(int j = N; j > 0; j--){
-            int number = 0;
+            int number = -2;
             for(int k = 0; k < N; k++){
                 if(findByValue(k) == -1) number = k;
             }
-            if(findByValue(i) == findByValue(j) && number != 0)
+            if(findByValue(i) == findByValue(j) && number != -2)
                 res[j] = number;
         }
     }

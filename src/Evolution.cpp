@@ -55,10 +55,10 @@ void Evolution::step() {
     for(int i = 0; i < pop_size * px; i++){
         auto r1 = rankingSelection();
         auto r2 = rankingSelection();
-        auto childPair = r1->crossover(r2, px);
+        r2 = r1->crossover(r2, px);
 
-        newPopulation->push_back(childPair.first);
-        newPopulation->push_back(childPair.second);
+        newPopulation->push_back(r1);
+        newPopulation->push_back(r2);
     }
 
     for(int i = 0; i < pop_size - (pop_size * px); i++){
