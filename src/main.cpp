@@ -75,10 +75,9 @@ void selection_check(){
         assert(average < e.getAverageCost());
         std::cout << "average cost of selected ones: " << average << std::endl;
         e.step();
-
     }
 }
 
 int main(){
-    run();
+    check_crossover();
 }
