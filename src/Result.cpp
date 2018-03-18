@@ -25,9 +25,9 @@ Result::Result(int N) {
 }
 
 void Result::mutate(double probability) {
-    double rand = random_float(1.0);
-    for(int i = 0; i < N; i++) {
-        if (rand < probability) {
+    for(int i = 0; i < N; i++){
+        double rand = random_float(1.0);
+        if (rand /*sprawdzone*/< probability) {
             this->flip(i);
         }
     }
@@ -47,8 +47,8 @@ void Result::flip(int index){
 //TODO: debug crossover
 void Result::crossover(Result* other, double probability){
     float rand = random_float(1.0);
-    if(rand < probability){
-        int position = random_int(N/2) + N/2;
+    if(rand /*sprawdzone*/< probability){
+        int position = random_int(N);
         for(int i = position; i < N; i++){
             other->res[i] = this->res[i];
             this->res[i] = other->res[i];

@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <iterator>
 #include <cassert>
+#include <set>
 
 Evolution::Evolution(int pop_size, int gen, float px, float pm, int tour, std::string filename) {
     this->pop_size = pop_size;
@@ -53,12 +54,18 @@ Problem* Evolution::getProblem() {
 
 void Evolution::step() {
     std::vector<Result*> *newPopulation = new std::vector<Result*>;
-    for(int i = 0; i < pop_size * px; i+=2){
-        newPopulation->push_back(rankingSelection());
-        newPopulation->push_back(rankingSelection());
+    for(int i = 0; i < pop_size * px; i+=2) {
+        auto r1 = rankingSelection();
+        auto r2 = rankingSelection();
+        r1->crossover(r2, px);
+        newPopulation->push_back(r1);
+        newPopulation->push_back(r2);
     }
-    for(auto a : *newPopulation)
-        a->crossover(newPopulation->at(random_int(newPopulation->size())), px);
+
+    for(auto animal : *newPopulation) {
+        int random = random_int(population->size());
+        animal->crossover(newPopulation->at(random_int(newPopulation->size())), px);
+    }
 
     while(newPopulation->size() < pop_size){
         newPopulation->push_back(this->rankingSelection());
@@ -94,7 +101,8 @@ Result* Evolution::rankingSelection(){
         int random_index = random_int(population->size());
         tournament[i] = population->at(random_index);
     }
-    std::sort(std::begin(tournament), std::end(tournament), [this](Result* r1, Result* r2){return this->problem->costFunction(*r1) < this->problem->costFunction(*r2);});
+
+    std::sort(std::begin(tournament), std::end(tournament), [this](Result* r1, Result* r2){return this->problem->costFunction(*r1) /*sprawdzony kierunek*/< this->problem->costFunction(*r2);});
     // std::cout << problem->costFunction(*tournament[0]) << std::endl;
     return tournament[0];
 }
