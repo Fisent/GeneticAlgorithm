@@ -8,13 +8,17 @@
 #include <iterator>
 #include <cassert>
 #include <set>
+#include <fstream>
+#include <sstream>
+#include <iomanip>
 
-Evolution::Evolution(int pop_size, int gen, float px, float pm, int tour, std::string filename) {
+Evolution::Evolution(int pop_size, int gen, float px, float pm, int tour, bool ranking, std::string filename) {
     this->pop_size = pop_size;
     this->gen = gen;
     this->px = px;
     this->pm = pm;
     this->tour = tour;
+    this->ranking = ranking;
     FileReader fr;
     problem = new Problem(fr.toVector(fr.read(filename)));
     population = new std::vector<Result*>;
@@ -141,4 +145,27 @@ double Evolution::getAverageCost() {
         result += problem->costFunction(*animal);
     }
     return result / population->size();
+}
+
+void Evolution::run(bool print) {
+    try {
+        std::ofstream log_file;
+        std::ostringstream stream_px;
+        stream_px << std::setprecision(2) << px;
+        std::ostringstream stream_pm;
+        stream_pm << std::setprecision(2) << pm;
+        std::string filename = "ps" + std::to_string(pop_size) + "gen" + std::to_string(gen) + "px"
+                               + stream_px.str() + "pm" + stream_pm.str() + "tour" + std::to_string(tour)
+                               + (ranking ? "ranking" : "roullete") + ".csv";
+        log_file.open(filename);
+        for (int i = 0; i < gen; i++) {
+            step();
+            if (print) std::cout << getAverageCost() << std::endl;
+            log_file << getAverageCost() << std::endl;
+        }
+        log_file.close();
+    }
+    catch(std::exception ex){
+        std::cout << ex.what() << std::endl;
+    }
 }

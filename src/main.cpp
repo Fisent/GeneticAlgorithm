@@ -25,11 +25,8 @@ void check_crossover(){
 }
 
 void run(){
-    Evolution e(100, 100, 0.7, 0.01, 5, "had12.dat");
-    for(int i = 0; i < 100; i ++ ){
-        e.step();
-        std::cout << e.getAverageCost() << std::endl;
-    }
+    Evolution e(100, 100, 0.7, 0.01, 5, true, "had12.dat");
+    e.run(true);
 }
 
 void repair_check(){
@@ -51,7 +48,7 @@ void repair_check(){
 }
 
 void same_animals_check(){
-    Evolution e(100, 100, 0.7, 0.01, 10, "had12.dat");
+    Evolution e(100, 100, 0.7, 0.01, 10, true, "had12.dat");
     for(int i = 0; i < 10; i ++ ){
         e.step();
         auto a = e.population;
@@ -64,7 +61,7 @@ void same_animals_check(){
 }
 
 void selection_check(){
-    Evolution e(100, 100, 0.7, 0.01, 10, "had12.dat");
+    Evolution e(100, 100, 0.7, 0.01, 10, true, "had12.dat");
     for(int i = 0; i < 100; i++){
         std::cout << "average cost: " << e.getAverageCost() << std::endl;
         double average = 0;
@@ -79,7 +76,7 @@ void selection_check(){
 }
 
 void run_from_optimum(){
-    Evolution e(100, 100, 0.7, 0.01, 5, "had12.dat");
+    Evolution e(100, 100, 0.7, 0.01, 5, true, "had12.dat");
     e.population = new std::vector<Result*>;
     for(int i = 0; i < e.pop_size; i++) {
         std::vector<int> v{3 - 1, 10 - 1, 11 - 1, 2 - 1, 12 - 1, 5 - 1, 6 - 1, 7 - 1, 8 - 1, 1 - 1, 4 - 1, 9 - 1};
@@ -93,7 +90,7 @@ void run_from_optimum(){
 }
 
 void selection_how_many_same_animals_check(){
-    Evolution e(100, 100, 0.7, 0.01, 10, "had12.dat");
+    Evolution e(100, 100, 0.7, 0.01, 10, true, "had12.dat");
     for(int i = 0; i < 100; i++){
         std::set<Result*> s;
         for(auto element : *e.population){
@@ -111,7 +108,7 @@ void selection_how_many_same_animals_check(){
 }
 
 void memory_addresses_check(){
-    Evolution e(100, 100, 0.7, 0.01, 5, "had12.dat");
+    Evolution e(100, 100, 0.7, 0.01, 5, true, "had12.dat");
     for(int i = 0; i < 100; i ++ ){
         e.step();
         std::cout << e.getAverageCost() << std::endl;
@@ -123,7 +120,7 @@ void memory_addresses_check(){
 }
 
 void run_print_population(){
-    Evolution e(100, 100, 0.7, 0.01, 5, "had12.dat");
+    Evolution e(100, 100, 0.7, 0.01, 5, true, "had12.dat");
     for(int i = 0; i < 100; i ++ ){
         e.step();
         std::cout << e.getAverageCost() << std::endl;

@@ -6,7 +6,7 @@
 
 class Evolution{
 public:
-    Evolution(int pop_size, int gen, float px, float pm, int tour, std::string filename);
+    Evolution(int pop_size, int gen, float px, float pm, int tour, bool ranking, std::string filename);
     virtual ~Evolution();
     int get_pop_size();
     int get_gen();
@@ -20,12 +20,14 @@ public:
     Result* roulleteSelection();
     Result* rankingSelection();
     double getAverageCost();
+    void run(bool print);
 
     int pop_size;
     int gen;
     float px;
     float pm;
     int tour;
+    bool ranking;
     std::vector<Result*>* population;
     Problem* problem;
 };

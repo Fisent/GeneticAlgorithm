@@ -122,11 +122,11 @@ TEST (ResultTest, ResultsCostfunctionReturnsProperValue){
 }
 
 TEST (EvolutionTest, EvolutionCreateTest){
-    Evolution e(100, 100, 0.7, 0.01, 5, "had12.dat");
+    Evolution e(100, 100, 0.7, 0.01, 5, true, "had12.dat");
 }
 
 TEST (EvolutionTest, EvolutionHasProperParameteres){
-    Evolution e(100, 100, 0.7, 0.01, 5, "had12.dat");
+    Evolution e(100, 100, 0.7, 0.01, 5, true, "had12.dat");
     ASSERT_EQ(e.get_pop_size(), 100);
     ASSERT_EQ(e.get_gen(), 100);
     ASSERT_FLOAT_EQ(e.get_px(), 0.7);
@@ -135,17 +135,17 @@ TEST (EvolutionTest, EvolutionHasProperParameteres){
 }
 
 TEST (EvolutionTest, EvolutionCreatesPopulation) {
-    Evolution e(100, 100, 0.7, 0.01, 5, "had12.dat");
+    Evolution e(100, 100, 0.7, 0.01, 5, true, "had12.dat");
     e.getPopulation();
 }
 
 TEST (EvolutionTest, EvolutionCreatesPopulationOfProperSize){
-    Evolution e(100, 100, 0.7, 0.01, 5, "had12.dat");
+    Evolution e(100, 100, 0.7, 0.01, 5, true, "had12.dat");
     ASSERT_EQ(e.getPopulation()->size(), 100);
 }
 
 TEST(EvolutionTest, EvolutionRunsStepOfEvolution){
-    Evolution e(100, 100, 0.7, 0.01, 5, "had12.dat");
+    Evolution e(100, 100, 0.7, 0.01, 5, true, "had12.dat");
     e.step();
 }
 
