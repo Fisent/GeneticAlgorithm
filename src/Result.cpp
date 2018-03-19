@@ -45,17 +45,28 @@ void Result::flip(int index){
 }
 
 //TODO: debug crossover
-void Result::crossover(Result* other, double probability){
+std::pair<Result*, Result*> Result::crossover(Result* other, double probability){
     float rand = random_float(1.0);
     if(rand /*sprawdzone*/< probability){
+        std::vector<int>res1;
+        std::vector<int>res2;
+
         int position = random_int(N);
-        for(int i = position; i < N; i++){
-            other->res[i] = this->res[i];
-            this->res[i] = other->res[i];
+        for(int i = 0; i < position; i++){
+            res1.push_back(this->res.at(i));
+            res2.push_back(other->res.at(i));
         }
+        for(int i = position; i < N; i++){
+            res2.push_back(this->res[i]);
+            res1.push_back(other->res[i]);
+        }
+        Result* r1 = new Result(res1);
+        Result* r2 = new Result(res2);
+        r1->repair();
+        r2->repair();
+        return std::make_pair(r1, r2);
     }
-    this->repair();
-    other->repair();
+    return std::make_pair(this, other);
 }
 
 std::string Result::toString() {

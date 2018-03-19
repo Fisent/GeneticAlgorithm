@@ -122,6 +122,15 @@ void memory_addresses_check(){
     }
 }
 
+void run_print_population(){
+    Evolution e(100, 100, 0.7, 0.01, 5, "had12.dat");
+    for(int i = 0; i < 100; i ++ ){
+        e.step();
+        std::cout << e.getAverageCost() << std::endl;
+        for(auto a : *e.population) std::cout << a->toString() << std::endl;
+    }
+}
+
 int main(){
-    memory_addresses_check();
+    run();
 }
