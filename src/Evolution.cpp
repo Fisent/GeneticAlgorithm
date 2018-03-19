@@ -52,6 +52,7 @@ Problem* Evolution::getProblem() {
     return problem;
 }
 
+//TODO fix that all Results has the same address
 void Evolution::step() {
     std::vector<Result*> *newPopulation = new std::vector<Result*>;
     for(int i = 0; i < pop_size * px; i+=2) {
@@ -60,6 +61,7 @@ void Evolution::step() {
         r1->crossover(r2, px);
         newPopulation->push_back(r1);
         newPopulation->push_back(r2);
+
     }
 
     for(auto animal : *newPopulation) {

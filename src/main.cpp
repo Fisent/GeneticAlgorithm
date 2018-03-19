@@ -110,6 +110,18 @@ void selection_how_many_same_animals_check(){
     }
 }
 
+void memory_addresses_check(){
+    Evolution e(100, 100, 0.7, 0.01, 5, "had12.dat");
+    for(int i = 0; i < 100; i ++ ){
+        e.step();
+        std::cout << e.getAverageCost() << std::endl;
+        for(auto animal : *e.population){
+            std::cout << animal << ", ";
+        }
+        std::cout << std::endl;
+    }
+}
+
 int main(){
-    run();
+    memory_addresses_check();
 }
