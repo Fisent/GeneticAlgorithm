@@ -7,7 +7,6 @@
 class Evolution{
 public:
     Evolution(int pop_size, int gen, float px, float pm, int tour, bool ranking, std::string filename);
-    virtual ~Evolution();
     int get_pop_size();
     int get_gen();
     float get_px();

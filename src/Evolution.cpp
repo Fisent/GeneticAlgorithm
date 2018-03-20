@@ -88,10 +88,6 @@ void Evolution::step() {
     assert(pop_size == population->size());
 }
 
-Evolution::~Evolution() {
-    delete population;
-    delete problem;
-}
 
 std::vector<int> &Evolution::getPopulationCosts() {
     std::vector<int>* result = new std::vector<int>();

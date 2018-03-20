@@ -25,10 +25,10 @@ void check_crossover(){
     for(auto element : r2->res) std::cout << element << ", "; std::cout << std::endl;
 }
 
-void run(){
-    Evolution e(100, 100, 0.7, 0.01, 5, true, "had12.dat");
-    e.run(true);
-}
+//void run(){
+//    Evolution e(100, 100, 0.7, 0.01, 5, true, "had12.dat");
+//    e.run(true);
+//}
 
 void repair_check(){
     bool result = true;
@@ -129,13 +129,19 @@ void run_print_population(){
     }
 }
 
+void run(Evolution &e){
+    for(int i = 0; i < e.gen; i++){
+        e.step();
+        std::cout << e.getAverageCost() << std::endl;
+    }
+}
+
 void run_log_all(){
     int populations[] {100, 200};
     int generations[] {100};
     float pxs[] {0.7, 0.5, 0.1};
     float pms[] {0.01, 0.1, 0.5};
     int tours[] {5, 10};
-    std::vector<std::thread> threads;
 
     for(auto population : populations){
         for(auto generation : generations){
@@ -143,18 +149,16 @@ void run_log_all(){
                 for(auto pm : pms){
                     for(auto tour : tours){
                         Evolution e(population, generation, px, pm, tour, true, "had12.dat");
-                        threads.push_back(std::thread (e.run(true)));
+                        e.run(true);
                     }
                 }
             }
         }
     }
-    for(auto thread : threads){
-        thread.join();
-    }
+
 
 }
 
 int main(){
-    run();
+    run_log_all();
 }
