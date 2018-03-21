@@ -155,5 +155,6 @@ void run_log_all(bool roulette){
 }
 
 int main(){
-    run();
+    run_log_all(false);
+    run_log_all(true);
 }
