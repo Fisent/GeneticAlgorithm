@@ -11,6 +11,7 @@
 #include <fstream>
 #include <sstream>
 #include <iomanip>
+#include <cfloat>
 
 Evolution::Evolution(int pop_size, int gen, float px, float pm, int tour, bool ranking, std::string filename) {
     this->pop_size = pop_size;
@@ -60,8 +61,8 @@ Problem* Evolution::getProblem() {
 void Evolution::step() {
     std::vector<Result*> *newPopulation = new std::vector<Result*>;
     for(int i = 0; i < pop_size * px; i+=2) {
-        auto r1 = rankingSelection();
-        auto r2 = rankingSelection();
+        auto r1 = ranking ? rankingSelection() : roulleteSelection();
+        auto r2 = ranking ? rankingSelection() : roulleteSelection();
         auto pair = r1->crossover(r2, px);
         newPopulation->push_back(pair.first);
         newPopulation->push_back(pair.second);
@@ -109,31 +110,21 @@ Result* Evolution::rankingSelection(){
     return tournament[0];
 }
 
-// Result *Evolution::roulleteSelection() {
-//     int sum_of_weights = 0;
-//     std::vector<double> probabilities;
-//     for(auto element : *population) {
-//         // std::cout << problem->costFunction(*element) << ", ";
-//         sum_of_weights += problem->costFunction(*element);
-//     }
-//     for(auto element : *population){
-//         probabilities.push_back();
-//     }
-//     // std::cout << std::endl;
-//     for(auto animal : *population){
-//         sum_of_weights += problem->costFunction(*animal);
-//     }
-//     int random = random_int(sum_of_weights);
+Result *Evolution::roulleteSelection() {
+    int sum_of_weights = 0;
+    for(auto animal : *population){
+        sum_of_weights += problem->costFunction(*animal);
+    }
+    int random = random_int(sum_of_weights);
 
-//     for(auto animal : *population){
-//         int weight = problem->costFunction(*animal);
-//         if(random < weight){
-//             std::cout << problem->costFunction(*animal) << ", " << getAverageCost() << std::endl;
-//             return animal;
-//         }
-//         random -= weight;
-//     }
-// }
+    for(auto animal : *population){
+        int weight = problem->costFunction(*animal);
+        if(random < weight){
+            return animal;
+        }
+        random -= weight;
+    }
+}
 
 double Evolution::getAverageCost() {
     double result = 0;
@@ -157,7 +148,7 @@ void Evolution::run(bool print) {
         for (int i = 0; i < gen; i++) {
             step();
             if (print) std::cout << getAverageCost() << std::endl;
-            log_file << getAverageCost() << std::endl;
+            log_file << costOfTheBest() << ", " << getAverageCost() << ", " << costOfTheWorst() << std::endl;
         }
         log_file.close();
     }
@@ -165,3 +156,26 @@ void Evolution::run(bool print) {
         std::cout << ex.what() << std::endl;
     }
 }
+
+int Evolution::costOfTheBest() {
+    int best_cost = INT32_MAX;
+    for(auto animal : *population){
+        int cost = problem->costFunction(*animal);
+        if(cost < best_cost)
+            best_cost = cost;
+    }
+    return best_cost;
+}
+
+int Evolution::costOfTheWorst() {
+    int worst_cost = 0;
+    for(auto animal : *population){
+        int cost = problem->costFunction(*animal);
+        if(cost > worst_cost){
+            worst_cost = cost;
+        }
+    }
+    return worst_cost;
+}
+
+

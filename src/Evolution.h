@@ -20,6 +20,8 @@ public:
     Result* rankingSelection();
     double getAverageCost();
     void run(bool print);
+    int costOfTheBest();
+    int costOfTheWorst();
 
     int pop_size;
     int gen;

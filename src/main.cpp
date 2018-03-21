@@ -25,10 +25,14 @@ void check_crossover(){
     for(auto element : r2->res) std::cout << element << ", "; std::cout << std::endl;
 }
 
-//void run(){
-//    Evolution e(100, 100, 0.7, 0.01, 5, true, "had12.dat");
-//    e.run(true);
-//}
+void run(){
+
+    Evolution e(100, 100, 0.7, 0.01, 5, false, "had12.dat");
+    for(int i = 0; i < e.gen; i++){
+        e.step();
+        std::cout << std::to_string(e.costOfTheBest()) << ", " << std::to_string(e.getAverageCost()) << ", " << std::to_string(e.costOfTheWorst()) << std::endl;
+    }
+}
 
 void repair_check(){
     bool result = true;
@@ -129,14 +133,7 @@ void run_print_population(){
     }
 }
 
-void run(Evolution &e){
-    for(int i = 0; i < e.gen; i++){
-        e.step();
-        std::cout << e.getAverageCost() << std::endl;
-    }
-}
-
-void run_log_all(){
+void run_log_all(bool roulette){
     int populations[] {100, 200};
     int generations[] {100};
     float pxs[] {0.7, 0.5, 0.1};
@@ -148,17 +145,15 @@ void run_log_all(){
             for(auto px : pxs){
                 for(auto pm : pms){
                     for(auto tour : tours){
-                        Evolution e(population, generation, px, pm, tour, true, "had12.dat");
+                        Evolution e(population, generation, px, pm, tour, not roulette, "had12.dat");
                         e.run(true);
                     }
                 }
             }
         }
     }
-
-
 }
 
 int main(){
-    run_log_all();
+    run();
 }
