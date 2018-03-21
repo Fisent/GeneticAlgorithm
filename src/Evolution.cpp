@@ -147,7 +147,7 @@ void Evolution::run(bool print) {
         log_file.open(filename);
         for (int i = 0; i < gen; i++) {
             step();
-            if (print) std::cout << getAverageCost() << std::endl;
+            if (print) std::cout << costOfTheBest() << ", " << getAverageCost() << ", " << costOfTheWorst() << std::endl;
             log_file << costOfTheBest() << ", " << getAverageCost() << ", " << costOfTheWorst() << std::endl;
         }
         log_file.close();
