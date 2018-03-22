@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 import matplotlib.pyplot as plt
 import os
@@ -7,7 +7,7 @@ import os
 
 
 for file_name in os.listdir('charts/'):
-    csv = file('charts/' + file_name, 'r')
+    csv = open('charts/' + file_name, 'r')
     series1 = []
     series2 = []
     series3 = []
@@ -17,7 +17,6 @@ for file_name in os.listdir('charts/'):
         series1.append(tab[0])
         series2.append(tab[1])
         series3.append(tab[2])
-
 
     plt.plot(range(1,101), series1, 'r')
     plt.plot(range(1,101), series2, 'b')
