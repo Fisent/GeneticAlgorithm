@@ -18,8 +18,14 @@ for file_name in os.listdir('charts/'):
         series2.append(tab[1])
         series3.append(tab[2])
 
+    # series1.reverse()
+    # series2.reverse()
+    # series3.reverse()
+
     plt.plot(range(1,101), series1, 'r')
     plt.plot(range(1,101), series2, 'b')
     plt.plot(range(1,101), series3, 'g')
-    plt.savefig(file_name[:-3] + '.pdf')
-    plt.close()
+    plt.title(file_name)
+    plt.show()
+    # plt.savefig(file_name[:-3] + '.pdf')
+    # plt.close()
