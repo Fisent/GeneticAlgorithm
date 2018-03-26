@@ -57,7 +57,6 @@ Problem* Evolution::getProblem() {
     return problem;
 }
 
-//TODO fix that all Results has the same address
 void Evolution::step() {
     std::vector<Result*> *newPopulation = new std::vector<Result*>;
     for(int i = 0; i < pop_size * px; i+=2) {
@@ -135,25 +134,28 @@ double Evolution::getAverageCost() {
 }
 
 void Evolution::run(bool print) {
-    try {
-        std::ofstream log_file;
-        std::ostringstream stream_px;
-        stream_px << std::setprecision(2) << px;
-        std::ostringstream stream_pm;
-        stream_pm << std::setprecision(2) << pm;
-        std::string filename = "ps" + std::to_string(pop_size) + "gen" + std::to_string(gen) + "px"
-                               + stream_px.str() + "pm" + stream_pm.str() + "tour" + std::to_string(tour)
-                               + (ranking ? "ranking" : "roullete") + ".csv";
-        log_file.open(filename);
-        for (int i = 0; i < gen; i++) {
-            step();
-            if (print) std::cout << costOfTheBest() << ", " << getAverageCost() << ", " << costOfTheWorst() << std::endl;
-            log_file << costOfTheBest() << ", " << getAverageCost() << ", " << costOfTheWorst() << std::endl;
+    for(int i = 0; i < 10; i++) {
+        try {
+            std::ofstream log_file;
+            std::ostringstream stream_px;
+            stream_px << std::setprecision(2) << px;
+            std::ostringstream stream_pm;
+            stream_pm << std::setprecision(2) << pm;
+            std::string filename = "ps" + std::to_string(pop_size) + "gen" + std::to_string(gen) + "px"
+                                   + stream_px.str() + "pm" + stream_pm.str() + "tour" + std::to_string(tour)
+                                   + (ranking ? "ranking" : "roullete") + std::to_string(i) + ".csv";
+            log_file.open(filename);
+            for (int i = 0; i < gen; i++) {
+                step();
+                if (print)
+                    std::cout << costOfTheBest() << ", " << getAverageCost() << ", " << costOfTheWorst() << std::endl;
+                log_file << costOfTheBest() << ", " << getAverageCost() << ", " << costOfTheWorst() << std::endl;
+            }
+            log_file.close();
         }
-        log_file.close();
-    }
-    catch(std::exception ex){
-        std::cout << ex.what() << std::endl;
+        catch (std::exception ex) {
+            std::cout << ex.what() << std::endl;
+        }
     }
 }
 

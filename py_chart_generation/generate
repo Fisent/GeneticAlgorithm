@@ -3,29 +3,57 @@
 import matplotlib.pyplot as plt
 import os
 
-
-
+unique_files = set()
 
 for file_name in os.listdir('charts/'):
-    csv = open('charts/' + file_name, 'r')
+    unique_files.add(file_name[:-5])
+
+for file_name in unique_files:
+
     series1 = []
     series2 = []
     series3 = []
 
-    for line in csv:
-        tab = line.split(',')
-        series1.append(tab[0])
-        series2.append(tab[1])
-        series3.append(tab[2])
+    for i in range(100):
+        series1.append(0)
+        series2.append(0)
+        # series3.append(0)
 
-    # series1.reverse()
-    # series2.reverse()
-    # series3.reverse()
+    for i in range(10):
+        f = open('charts/' + file_name + str(i) + '.csv')
+        counter = 0
+        for line in f:
+            tab = line.split(',')
+            series1[counter] += float(tab[0])
+            series2[counter] += float(tab[1])
+            # series3[counter] += float(tab[2])
+            counter += 1
 
+    for i in range(len(series1)):
+        series1[i] /= 10
+        series2[i] /= 10
+        # series3[i] /= 10
+
+    # csv = open('charts/' + file_name, 'r')
+    # series1 = []
+    # series2 = []
+    # series3 = []
+    #
+    # for line in csv:
+    #     tab = line.split(',')
+    #     series1.append(tab[0])
+    #     series2.append(tab[1])
+    #     series3.append(tab[2])
+    #
+    # # series1.reverse()
+    # # series2.reverse()
+    # # series3.reverse()
+    #
     plt.plot(range(1,101), series1, 'r')
     plt.plot(range(1,101), series2, 'b')
-    plt.plot(range(1,101), series3, 'g')
+    # plt.plot(range(1,101), series3, 'g')
     plt.title(file_name)
+
+    plt.savefig(file_name[:-3] + '.png')
     plt.show()
-    # plt.savefig(file_name[:-3] + '.pdf')
-    # plt.close()
+    plt.close()

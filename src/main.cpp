@@ -27,7 +27,7 @@ void check_crossover(){
 
 void run(){
 
-    Evolution e(100, 100, 0.7, 0.01, 5, false, "had12.dat");
+    Evolution e(100, 100, 0.7, 0.01, 5, true, "had12.dat");
     for(int i = 0; i < e.gen; i++){
         e.step();
         std::cout << std::to_string(e.costOfTheBest()) << ", " << std::to_string(e.getAverageCost()) << ", " << std::to_string(e.costOfTheWorst()) << std::endl;
@@ -134,11 +134,11 @@ void run_print_population(){
 }
 
 void run_log_all(bool roulette){
-    int populations[] {100, 200};
+    int populations[] {100};
     int generations[] {100};
-    float pxs[] {0.7, 0.5, 0.1};
-    float pms[] {0.01, 0.1, 0.5};
-    int tours[] {5, 10};
+    float pxs[] {0.7, 0.5};
+    float pms[] {0.01,};
+    int tours[] {5};
 
     for(auto population : populations){
         for(auto generation : generations){
@@ -155,6 +155,7 @@ void run_log_all(bool roulette){
 }
 
 int main(){
-    run_log_all(false);
-    run_log_all(true);
+    Evolution e(100, 100, 0.7, 0.01, 5, false,"had12.dat");
+    e.run(true);
+
 }
